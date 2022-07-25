@@ -1,0 +1,16 @@
+br\com\store\enums\BrandEnum.class
+br\com\store\enums\DepartmentEnum.class
+br\com\store\repository\ProductRepository.class
+br\com\store\model\Costumer.class
+br\com\store\enums\PixMethods.class
+br\com\store\enums\SeasonEnum.class
+br\com\store\enums\TypeOfMerchandiseEnum.class
+br\com\store\StoreApplication.class
+br\com\store\enums\SizeEnum.class
+br\com\store\enums\MenuEnum.class
+br\com\store\model\Stock.class
+br\com\store\communication\communication.class
+br\com\store\enums\CategoryEnum.class
+br\com\store\enums\PaymentMethodEnum.class
+br\com\store\model\Product.class
+br\com\store\enums\ColorEnum.class

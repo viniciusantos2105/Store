@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: br.com.store.StoreApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.27 s <<< FAILURE! - in br.com.store.StoreApplicationTests
+contextLoads  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'productRepository' defined in br.com.store.repository.ProductRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Not a managed type: class br.com.store.model.Product
+Caused by: java.lang.IllegalArgumentException: Not a managed type: class br.com.store.model.Product
+
