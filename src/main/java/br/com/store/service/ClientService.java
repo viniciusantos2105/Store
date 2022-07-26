@@ -19,4 +19,5 @@ public class ClientService {
         Client client = clientRepository.findById(id).get();
         return client;
     }
+
 }

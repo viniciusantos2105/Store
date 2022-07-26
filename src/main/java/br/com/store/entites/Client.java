@@ -24,7 +24,7 @@ public class Client implements Serializable {
     private Long id;
     @NotBlank(message = "Insira o seu nome")
     private String name;
-    @CPF
+    @CPF//só aceita CPFS válidos
     @NotBlank(message = "Insira CPF válido")
     private String cpf;
 }
