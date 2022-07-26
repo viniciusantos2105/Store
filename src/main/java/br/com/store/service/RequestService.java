@@ -1,5 +1,7 @@
 package br.com.store.service;
 
+import br.com.store.dto.ClientDTO;
+import br.com.store.dto.ProductDTO;
 import br.com.store.entites.Client;
 import br.com.store.entites.Product;
 import br.com.store.entites.Request;
@@ -15,7 +17,9 @@ public class RequestService {
 
     @Autowired
     RequestRepository requestRepository;
+    @Autowired
     ProductService productService;
+    @Autowired
     ClientService clientService;
 
     public Request saveRequest(Request request){
@@ -23,18 +27,16 @@ public class RequestService {
     }
 
     public Request findByRequestId(Long id){
-        Request request = requestRepository.findById(id).get();
-        return request;
+      return requestRepository.findById(id).get();
     }
 
     public List<Request> findAllRequests(){
-        List<Request> requestList = requestRepository.findAll();
-        return requestList;
+        return requestRepository.findAll();
     }
 
-    public Request createRequest(Long clientId, Long productId, Integer quantity){
-        Client client = clientService.findByClientId(clientId);
-        Product product = productService.findByProductId(productId);
+    public Request saleRequest(Long id1, Long id2, Integer quantity){
+        Client client = clientService.findByClientId(id1);
+        Product product = productService.findByProductId(id2);
         BigDecimal price = productService.saleProduct(product.getId(), quantity);
         Request request = new Request(null, quantity, price, client, product);
         saveRequest(request);
