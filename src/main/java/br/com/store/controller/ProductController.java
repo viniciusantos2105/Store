@@ -1,7 +1,9 @@
 package br.com.store.controller;
 
+import br.com.store.dto.ProductDto;
 import br.com.store.entites.Product;
 import br.com.store.service.ProductService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +31,8 @@ public class ProductController {
     }
 
     @PostMapping("/addStock")
-    public ResponseEntity addStock(@RequestBody Long id, Integer quantity){
-        productService.addStock(id, quantity);
+    public ResponseEntity<HttpStatus> addStock(@RequestBody ProductDto productDto){
+        productService.addStock(productDto);
         return ResponseEntity.ok().body(HttpStatus.ACCEPTED);
     }
 }

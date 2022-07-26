@@ -1,5 +1,6 @@
 package br.com.store.service;
 
+import br.com.store.dto.ProductDto;
 import br.com.store.entites.Product;
 import br.com.store.entites.Request;
 import br.com.store.repository.ProductRepository;
@@ -27,13 +28,14 @@ public class ProductService {
         return productRepository.findById(id).get();
     }
 
-    public Product addStock(Long id, Integer quantity){
-        Product product = findByProductId(id);
-        if(quantity <= 0){
+    public Product addStock(ProductDto productDto){
+        Product product = findByProductId(productDto.getId());
+        if(productDto.getQuantity() <= 0){
             //return error e pedir para inserir quantiade valida
         }
         else{
-            product.setQuantity(product.getQuantity() + quantity);
+            product.setQuantity(product.getQuantity() + productDto.getQuantity());
+            save(product);
             return product; //return quantidade atualizada
         }
         return product;
