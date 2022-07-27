@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -19,9 +20,8 @@ public class Request implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Insira quantidade válida")
+    @NotNull(message = "Insira quantidade válida")
     private Integer quantidade;
-    @NotBlank(message = "Insira preço válido")
     private BigDecimal price;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,11 +19,12 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Insira um nome válido")
     private String name;
-    @NotBlank(message = "Insira quantida válida")
+    @NotNull(message = "Insira quantida válida")
     private Integer quantity;
-    @NotBlank(message = "Insira preço válido")
+    @NotNull(message = "Insira preço válido")
     private BigDecimal price;
 
 }
