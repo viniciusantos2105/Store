@@ -55,4 +55,10 @@ public class ProductController {
         productService.attPrice(productDTO);
         return HttpStatus.ACCEPTED;
     }
+
+    @GetMapping("/findFilter")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Product> findFilter(@RequestBody Product filter){
+      return productService.findFilter(filter);
+    }
 }

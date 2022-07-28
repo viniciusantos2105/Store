@@ -4,6 +4,8 @@ import br.com.store.dto.ProductDTO;
 import br.com.store.entites.Product;
 import br.com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -42,7 +44,6 @@ public class ProductService {
             save(product);
         }
     }
-
     public void attPrice(ProductDTO productDTO){
         Product product = findByProductId(productDTO.getId());
         if(productDTO.getPrice() <= 0){
@@ -53,7 +54,6 @@ public class ProductService {
             save(product);
         }
     }
-
     public BigDecimal saleProduct(Long id, Integer quantity){
         Product product = findByProductId(id);
         BigDecimal price = null;
@@ -67,6 +67,12 @@ public class ProductService {
             return price;
             //return sucessfull com mensagem de compra realizada com sucesso
         }
+    }
+    //Método para fazer pesquisa por nome de peça
+    public List<Product> findFilter(Product filter){
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filter, matcher);
+        return productRepository.findAll(example);
     }
 
     //Fazer um método de desconto

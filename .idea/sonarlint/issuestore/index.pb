@@ -7,12 +7,8 @@ l
 <src/main/java/br/com/store/repository/ProductRepository.java,7\5\75aac8389f15111754877dc7540123ce0946605b
 l
 <src/main/java/br/com/store/controller/RequestController.java,7\e\7eeab40aae920bf7cae3b3619c1659530331807d
-k
-;src/main/java/br/com/store/controller/ClientController.java,b\3\b315d356d082b1fd67faa54c893ed6e68aa60402
 _
 /src/main/java/br/com/store/entites/Request.java,c\9\c9f2d2ce244fe4af6e78c97d5b04bf73b33db2d1
-_
-/src/main/java/br/com/store/entites/Product.java,5\5\5546993e66c1bc380a2752689cbd8b1dfa88b368
 ^
 .src/main/java/br/com/store/entites/Client.java,c\0\c0ff1deaaff240aee7fcae05ee8eb6469239a103
 ]
@@ -21,11 +17,3 @@ k
 ;src/main/java/br/com/store/repository/ClientRepository.java,e\c\ec4097c72cbfdbab3fb1cfb3bbe082beae250285
 l
 <src/main/java/br/com/store/repository/RequestRepository.java,3\3\33f239550d671a3aed1eb05f55183d04fb293b73
-f
-6src/main/java/br/com/store/service/RequestService.java,b\f\bf6186833d2cf58e29f9d50f2a2765c64feb2798
-l
-<src/main/java/br/com/store/controller/ProductController.java,f\4\f4f2a854d7fc2f2474ce2369a9ba019585d967a1
-f
-6src/main/java/br/com/store/service/ProductService.java,0\4\04d68c4f0a58f1f5511bc10557842c0b9c7b78c3
-e
-5src/main/java/br/com/store/service/ClientService.java,f\6\f6b3f54f4c21c2f76d93bc6894931c507e37921f
