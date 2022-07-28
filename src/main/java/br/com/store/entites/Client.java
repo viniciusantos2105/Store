@@ -22,9 +22,9 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Insira o seu nome")
+    @NotBlank(message = "Campo nome é obrigatorio")
     private String name;
-    @CPF//só aceita CPFS válidos
-    @NotBlank(message = "Insira CPF válido")
+    @CPF(message = "Informe CPF válido")
+    @NotBlank(message = "Campo CPF é obrigatorio")
     private String cpf;
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,15 +23,14 @@ public class ProductController {
        return productService.findAllProducts();
     }
 
-    @GetMapping("/findByProductId/{id}")
-    @ResponseStatus(HttpStatus.CONTINUE)
-    public Product findByProdcutId(@PathVariable Long id){
+    @GetMapping("/findByProductId{id}")
+    public Product findByProductId(@PathVariable Long id){
         return productService.findByProductId(id);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpStatus createProduct(@RequestBody Product product){
+    public HttpStatus createProduct(@RequestBody @Valid Product product){
         productService.save(product);
         return HttpStatus.CREATED;
     }

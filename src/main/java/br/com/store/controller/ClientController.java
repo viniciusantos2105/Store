@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @Controller
 @RestController
 @RequestMapping("/register")
@@ -17,7 +20,7 @@ public class ClientController {
 
     @PostMapping("/createClient")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client newClient(@RequestBody Client client){
+    public Client newClient(@RequestBody @Valid Client client){
       return clientService.save(client);
     }
 
@@ -26,4 +29,8 @@ public class ClientController {
         return clientService.findByClientId(id);
     }
 
+    @GetMapping("/findFilter")
+    public List<Client> findFilter(@RequestBody Client filter){
+        return clientService.findFilter(filter);
+    }
 }

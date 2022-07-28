@@ -20,11 +20,11 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Insira um nome válido")
+    @NotBlank(message = "Campo nome é obrigatorio")
     private String name;
-    @NotNull(message = "Insira quantida válida")
+    @NotNull(message = "Campo quantidade é obrigatorio")
     private Integer quantity;
-    @NotNull(message = "Insira preço válido")
+    @NotNull(message = "Campo preço é obrigatorio")
     private BigDecimal price;
 
 }
