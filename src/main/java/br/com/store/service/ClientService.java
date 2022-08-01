@@ -18,6 +18,24 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
+    public boolean findByUsername(String username){
+        if(clientRepository.findByUsername(username).isPresent()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean findByCpf(String cpf){
+        if(clientRepository.findByCpf(cpf).isPresent()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public Client save(Client client){
         return clientRepository.save(client);
     }
