@@ -17,8 +17,8 @@ public class ProductService {
     @Autowired
     public ProductRepository productRepository;
 
-    public void save(Product product){
-        productRepository.save(product);
+    public Product save(Product product){
+      return productRepository.save(product);
     }
 
     public void delete(Long id){
@@ -75,5 +75,13 @@ public class ProductService {
         return productRepository.findAll(example);
     }
 
+    public boolean findByName(String name){
+        if(productRepository.findByName(name).isPresent()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     //Fazer um método de desconto
 }

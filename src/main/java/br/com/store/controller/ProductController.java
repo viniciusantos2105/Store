@@ -2,6 +2,8 @@ package br.com.store.controller;
 
 import br.com.store.dto.ProductDTO;
 import br.com.store.entites.Product;
+import br.com.store.exceptions.CustomerAlreadyExistsException;
+import br.com.store.exceptions.ProductAlreadyExistsException;
 import br.com.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,9 +32,15 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpStatus createProduct(@RequestBody @Valid Product product){
-        productService.save(product);
-        return HttpStatus.CREATED;
+    public Product createProduct(@RequestBody @Valid Product product){
+        if(productService.findByName(product.getName()) == true){
+            throw new ProductAlreadyExistsException();
+        }
+        else{
+            //String senhaCriptografada = passwordEncoder.encode(user.getPassword());
+            //client.setPassword(senhaCriptografada);
+            return productService.save(product);
+        }
     }
 
     @DeleteMapping("/delete{id}")
