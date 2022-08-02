@@ -1,7 +1,8 @@
 package br.com.store.controller;
 
 import br.com.store.entites.Client;
-import br.com.store.exceptions.CustomerAlreadyExistsException;
+import br.com.store.exceptions.CpfAlreadyExistsException;
+import br.com.store.exceptions.UsernameAlreadyExistsException;
 import br.com.store.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,11 @@ public class ClientController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Client newClient(@RequestBody @Valid Client client){
-        if(clientService.findByCpf(client.getCpf()) == true || clientService.findByUsername(client.getUsername()) == true){
-            throw new CustomerAlreadyExistsException();
+        if(clientService.findByCpf(client.getCpf()) == true){
+            throw new CpfAlreadyExistsException();
+        }
+        if(clientService.findByUsername(client.getUsername()) == true){
+            throw new UsernameAlreadyExistsException();
         }
         else{
             //String senhaCriptografada = passwordEncoder.encode(user.getPassword());

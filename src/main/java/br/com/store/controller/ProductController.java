@@ -2,7 +2,6 @@ package br.com.store.controller;
 
 import br.com.store.dto.ProductDTO;
 import br.com.store.entites.Product;
-import br.com.store.exceptions.CustomerAlreadyExistsException;
 import br.com.store.exceptions.ObjectNotFoundException;
 import br.com.store.exceptions.ProductAlreadyExistsException;
 import br.com.store.service.ProductService;
