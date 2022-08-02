@@ -31,4 +31,5 @@ public class Client implements Serializable {
     private String cpf;
     @NotBlank(message = "Campo password é obrigatorio")
     private String password;
+
 }
