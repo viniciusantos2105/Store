@@ -36,7 +36,7 @@ public class RequestService {
 
     public Request saleRequest(Long id1, Long id2, Integer quantity){
         Client client = clientService.findByClientId(id1);
-        Product product = productService.findByProductId(id2);
+        Product product = productService.findByProductId(id2).get();
         BigDecimal price = productService.saleProduct(product.getId(), quantity);
         Request request = new Request(null, quantity, price, client, product);
         saveRequest(request);

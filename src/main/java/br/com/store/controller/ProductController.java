@@ -3,6 +3,7 @@ package br.com.store.controller;
 import br.com.store.dto.ProductDTO;
 import br.com.store.entites.Product;
 import br.com.store.exceptions.CustomerAlreadyExistsException;
+import br.com.store.exceptions.ObjectNotFoundException;
 import br.com.store.exceptions.ProductAlreadyExistsException;
 import br.com.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -27,7 +29,8 @@ public class ProductController {
 
     @GetMapping("/findByProductId{id}")
     public Product findByProductId(@PathVariable Long id){
-        return productService.findByProductId(id);
+        Optional<Product> product = productService.findByProductId(id);
+      return product.orElseThrow(()-> new ObjectNotFoundException());
     }
 
     @PostMapping("/create")

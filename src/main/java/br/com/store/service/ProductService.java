@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -30,12 +31,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findByProductId(Long id){
-        return productRepository.findById(id).get();
+    public Optional<Product> findByProductId(Long id){
+        return productRepository.findById(id);
     }
 
     public void addStock(ProductDTO productDto){
-        Product product = findByProductId(productDto.getId());
+        Product product = findByProductId(productDto.getId()).get();
         if(productDto.getQuantity() <= 0){
             throw new NumberFormatException("Numero inválido, insira quantidade maior que 0");
         }
@@ -45,7 +46,7 @@ public class ProductService {
         }
     }
     public void attPrice(ProductDTO productDTO){
-        Product product = findByProductId(productDTO.getId());
+        Product product = findByProductId(productDTO.getId()).get();
         if(productDTO.getPrice() <= 0){
             throw new NumberFormatException("Preço inválido, insira um preço maior que 0");
         }
@@ -55,7 +56,7 @@ public class ProductService {
         }
     }
     public BigDecimal saleProduct(Long id, Integer quantity){
-        Product product = findByProductId(id);
+        Product product = findByProductId(id).get();
         BigDecimal price = null;
         if(quantity > product.getQuantity()){
             throw new NumberFormatException("Numero de peças maior que em estoque");
