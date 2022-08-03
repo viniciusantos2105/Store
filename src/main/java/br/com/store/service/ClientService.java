@@ -67,6 +67,9 @@ public class ClientService implements UserDetailsService {
             StringBuilder jsonSb = new StringBuilder();
             br.lines().forEach(l -> jsonSb.append(l.trim()));
             json = jsonSb.toString();
+            if(json.substring(2, 6).equals("erro")){
+             throw new AddressNotFoundExecption();
+            }
         } catch (Exception e) {
             throw new AddressNotFoundExecption();
         }
