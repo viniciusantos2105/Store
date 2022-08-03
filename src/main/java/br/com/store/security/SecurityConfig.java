@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 antMatchers("/client/create")
                 .permitAll()
                 .antMatchers("/client/findAll")
+                .permitAll()
+                .antMatchers("/requests/sale")
                 .permitAll();
     }
 }

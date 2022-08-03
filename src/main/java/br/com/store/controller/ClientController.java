@@ -1,10 +1,9 @@
 package br.com.store.controller;
 
-import br.com.store.dto.AdressDTO;
-import br.com.store.dto.ClientDTO;
-import br.com.store.entites.Adress;
+import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.exceptions.CpfAlreadyExistsException;
+import br.com.store.exceptions.EmailAlreadyExistisException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
 import br.com.store.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,16 @@ public class ClientController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Client newClient(@RequestBody @Valid Client client){
-        if(clientService.findByCpf(client.getCpf()) == true){
-            throw new CpfAlreadyExistsException();
-        }
         if(clientService.findByUsername(client.getUsername()) == true){
             throw new UsernameAlreadyExistsException();
         }
+        if(clientService.findByCpf(client.getCpf()) == true){
+            throw new CpfAlreadyExistsException();
+        }
+        if(clientService.findByEmail(client.getEmail()) == true){
+            throw new EmailAlreadyExistisException();
+        }
         else{
-            //String senhaCriptografada = passwordEncoder.encode(user.getPassword());
-            //client.setPassword(senhaCriptografada);
             client.setPassword(passwordEncoder.encode(client.getPassword()));
             return clientService.save(client);
         }
@@ -56,8 +56,8 @@ public class ClientController {
     }
 
     @PostMapping(value = "/findcep")
-    public ResponseEntity<Object> findAddresByCep(@RequestBody Adress adressDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.findAddressByCep(adressDTO.getCep()));
+    public ResponseEntity<Object> findAddresByCep(@RequestBody Address address) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.findAddressByCep(address.getCep()));
     }
 
 //    @PostMapping("/login")

@@ -20,7 +20,8 @@ public class RequestController {
 
     @PostMapping("/sale")
     public Request sale(@RequestBody RequestDTO requestDTO){
-       return requestService.saleRequest(requestDTO.getId(), requestDTO.getId2(), requestDTO.getQuantity());
+       return requestService.saleRequest(requestDTO.getId(), requestDTO.getId2(), requestDTO.getQuantity(),
+               requestDTO.getAddress(), requestDTO.getNumber());
     }
 
     @GetMapping("/findAllSales")

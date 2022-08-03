@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -29,7 +27,13 @@ public class Client implements Serializable {
     @CPF(message = "Informe CPF válido")
     @NotBlank(message = "Campo CPF é obrigatorio")
     private String cpf;
+    @Email
+    private String email;
     @NotBlank(message = "Campo password é obrigatorio")
     private String password;
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "tb_address")
+    private Address address;
+
 
 }

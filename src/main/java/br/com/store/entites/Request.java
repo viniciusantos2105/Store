@@ -32,4 +32,8 @@ public class Request implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
 }
