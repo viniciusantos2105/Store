@@ -118,6 +118,7 @@ public class ClientService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Client client = clientRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username inválido"));
+
     }
 }

@@ -6,12 +6,14 @@ import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.entites.Product;
 import br.com.store.entites.Request;
+import br.com.store.exceptions.ProductNotFoundExecption;
 import br.com.store.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequestService {
@@ -45,15 +47,16 @@ public class RequestService {
         addressFinal.setEstado(listAddress.get(4).substring(2));
         addressFinal.setNumber(number);
         Client client = clientService.findByClientId(id1);
-        Product product = productService.findByProductId(id2).get();
-        BigDecimal price = productService.saleProduct(product.getId(), quantity);
+        Optional<Product> product = productService.findByProductId(id2);
+        product.orElseThrow(()-> new ProductNotFoundExecption());
+        BigDecimal price = productService.saleProduct(product.get().getId(), quantity);
         if(addressFinal == null){
-            Request request = new Request(null, quantity, price, client, product, client.getAddress());
+            Request request = new Request(null, quantity, price, client, product.get(), client.getAddress());
             saveRequest(request);
             return request;
         }
         else{
-            Request request = new Request(null, quantity, price, client, product, addressFinal);
+            Request request = new Request(null, quantity, price, client, product.get(), addressFinal);
             saveRequest(request);
             return request;
         }
