@@ -1,5 +1,7 @@
 package br.com.store.controller;
 
+import br.com.store.dto.ClientDTO;
+import br.com.store.dto.CredentialsDTO;
 import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.exceptions.CpfAlreadyExistsException;
@@ -9,6 +11,8 @@ import br.com.store.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -55,13 +59,18 @@ public class ClientController {
         return clientService.findFilter(filter);
     }
 
-    @PostMapping(value = "/findcep")
+    @PostMapping("/findcep")
     public ResponseEntity<Object> findAddresByCep(@RequestBody Address address) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.findAddressByCep(address.getCep()));
     }
 
-//    @PostMapping("/login")
-//    public Client login(ClientDTO clientDTO){
-//
-//    }
+    @PostMapping("/login")
+    public UserDetails login(@RequestBody CredentialsDTO credentialsDTO){
+//        try{
+            Client client = Client.builder().username(credentialsDTO.getUsername())
+                                            .password(credentialsDTO.getPassword()).build();
+            UserDetails userLogin = clientService.authentic(client);
+            return null;
+//        //}
+   }
 }

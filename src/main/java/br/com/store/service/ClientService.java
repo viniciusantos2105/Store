@@ -2,13 +2,17 @@ package br.com.store.service;
 
 import br.com.store.entites.Client;
 import br.com.store.exceptions.AddressNotFoundExecption;
+import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -23,6 +27,9 @@ import java.util.List;
 @Service
 public class ClientService implements UserDetailsService {
 
+    @Autowired
+    @Lazy
+    PasswordEncoder encoder;
     @Autowired
     ClientRepository clientRepository;
 
@@ -120,5 +127,17 @@ public class ClientService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Client client = clientRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username inválido"));
 
+        String[] roles = new String[]{"USER"};
+
+        return User.builder().username(client.getUsername()).password(client.getPassword()).roles().build();
+    }
+
+    public UserDetails authentic(Client client){
+        UserDetails usuario = loadUserByUsername(client.getUsername());
+        boolean passwordEquals = encoder.matches(client.getPassword(), usuario.getPassword());
+        if(passwordEquals){
+            return usuario;
+        }
+        throw new PasswordInvalidException();
     }
 }
