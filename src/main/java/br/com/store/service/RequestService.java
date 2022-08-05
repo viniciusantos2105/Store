@@ -10,6 +10,8 @@ import br.com.store.exceptions.ProductNotFoundExecption;
 import br.com.store.repository.RequestRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -67,5 +69,11 @@ public class RequestService {
             saveRequest(request);
             return request;
         }
+    }
+
+    public List<Request> findAllPurchases(Client client){
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(client, matcher);
+        return requestRepository.findAll(example);
     }
 }

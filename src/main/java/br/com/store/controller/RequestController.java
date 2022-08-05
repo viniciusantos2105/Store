@@ -41,8 +41,17 @@ public class RequestController {
                requestDTO.getAddress(), requestDTO.getNumber());
     }
 
-    @GetMapping("/findAllSales")
+    @GetMapping("/findAll")
     public List<Request> listAllSales(){
         return requestService.findAllRequests();
     }
+
+    @GetMapping("/findClientPurchases")
+    public List<Request> listAllPurchasesClient(@RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Client client = clientService.findByUsernameGet(username);
+        return requestService.findAllPurchases(client);
+    }
+
 }
