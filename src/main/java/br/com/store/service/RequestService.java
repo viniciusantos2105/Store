@@ -8,6 +8,7 @@ import br.com.store.entites.Product;
 import br.com.store.entites.Request;
 import br.com.store.exceptions.ProductNotFoundExecption;
 import br.com.store.repository.RequestRepository;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Service
 public class RequestService {
+
 
     @Autowired
     RequestRepository requestRepository;

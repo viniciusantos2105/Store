@@ -52,6 +52,10 @@ public class ClientService implements UserDetailsService {
         }
     }
 
+    public Client findByUsernameGet(String username){
+       return clientRepository.findByUsername(username).get();
+    }
+
     public boolean findByCpf(String cpf){
         if(clientRepository.findByCpf(cpf).isPresent()){
             return true;

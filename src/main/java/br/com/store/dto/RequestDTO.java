@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class RequestDTO {
 
     private Long id;
-    private Long id2;
     private Integer quantity;
     private String address;
     private String number;

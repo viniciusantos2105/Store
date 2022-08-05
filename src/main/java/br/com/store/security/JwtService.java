@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -47,6 +48,7 @@ public class JwtService {
     }
 
     public String getClientUsername(String token) throws ExpiredJwtException{
-        return (String) gettingClaims(token).getSubject();
+        return gettingClaims(token).getSubject();
     }
+
 }
