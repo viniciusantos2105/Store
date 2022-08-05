@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -19,9 +20,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    private JwtService jwtService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public OncePerRequestFilter jwtFilter(){
+        return new JwtAuthFilter(jwtService, clientService);
     }
 
     @Override
@@ -39,6 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("client/login")
                 .permitAll()
                 .antMatchers("/requests/sale")
-                .permitAll();
+                .authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

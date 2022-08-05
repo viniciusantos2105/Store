@@ -2,20 +2,24 @@ package br.com.store.controller;
 
 import br.com.store.dto.ClientDTO;
 import br.com.store.dto.CredentialsDTO;
+import br.com.store.dto.TokenDTO;
 import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.exceptions.CpfAlreadyExistsException;
 import br.com.store.exceptions.EmailAlreadyExistisException;
+import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
+import br.com.store.security.JwtService;
 import br.com.store.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,9 +31,11 @@ public class ClientController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    JwtService jwtService;
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
@@ -65,12 +71,15 @@ public class ClientController {
     }
 
     @PostMapping("/login")
-    public UserDetails login(@RequestBody CredentialsDTO credentialsDTO){
-//        try{
+    public TokenDTO login(@RequestBody CredentialsDTO credentialsDTO){
+        try{
             Client client = Client.builder().username(credentialsDTO.getUsername())
                                             .password(credentialsDTO.getPassword()).build();
             UserDetails userLogin = clientService.authentic(client);
-            return null;
-//        //}
+            String token = jwtService.generatingToken(client);
+            return new TokenDTO(client.getUsername(), token);
+        }catch (UsernameNotFoundException | PasswordInvalidException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
    }
 }
