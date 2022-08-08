@@ -25,8 +25,8 @@ public class OperatorService implements UserDetailsService {
     @Autowired
     OperatorRepository operatorRepository;
 
-    public Operator findByUsernameGet(String name){
-        return operatorRepository.findByName(name).get();
+    public Operator findByUsernameGet(String username){
+        return operatorRepository.findByUsername(username).get();
     }
 
     public Operator createOperator(Operator operator){
@@ -42,8 +42,12 @@ public class OperatorService implements UserDetailsService {
         }
     }
 
+    public boolean findByUsername(String username){
+        return operatorRepository.findByUsername(username).isPresent();
+    }
+
     public Operator changeResponsibility(Operator operator, Operator promotedOperator, String responsibility){
-        if(operator.getResponsibility() != Responsibility.ADMIN){
+        if(operator.getResponsibility().getResponsibility() != Responsibility.ADMIN.getResponsibility()){
             throw new UsernameAlreadyExistsException(); //criar erro personalizado
         }
         else if(responsibility.equalsIgnoreCase(Responsibility.ADMIN.getResponsibility())){
@@ -66,16 +70,16 @@ public class OperatorService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Operator operator = operatorRepository.findByName(name).orElseThrow(()-> new UsernameNotFoundException("Name inválido"));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Operator operator = operatorRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Name inválido"));
 
         String[] roles = new String[]{"USER"};
 
-        return User.builder().username(operator.getName()).password(operator.getPassword()).roles().build();
+        return User.builder().username(operator.getUsername()).password(operator.getPassword()).roles().build();
     }
 
     public UserDetails authentic(Operator operator){
-        UserDetails usuario = loadUserByUsername(operator.getName());
+        UserDetails usuario = loadUserByUsername(operator.getUsername());
         boolean passwordEquals = encoder.matches(operator.getPassword(), usuario.getPassword());
         if(passwordEquals){
             return usuario;

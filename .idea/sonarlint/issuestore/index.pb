@@ -7,8 +7,6 @@ l
 .src/main/java/br/com/store/dto/ProductDTO.java,f\f\ffc7985153df03281d663a65b634e231c0f20b02
 l
 <src/main/java/br/com/store/repository/ProductRepository.java,7\5\75aac8389f15111754877dc7540123ce0946605b
-y
-Isrc/main/java/br/com/store/exceptions/UsernameAlreadyExistsException.java,5\6\568966739548fec7f17438f4976e77d197bd93ba
 r
 Bsrc/main/java/br/com/store/exceptions/ObjectNotFoundException.java,6\0\6074595758ca5f08e9a42349a37b53953b0000cc
 x
@@ -35,9 +33,5 @@ s
 Csrc/main/java/br/com/store/exceptions/ResourceExceptionHandler.java,8\1\81f90b2ea9f2d309dd203567310c4e6fd8552582
 s
 Csrc/main/java/br/com/store/exceptions/PasswordInvalidException.java,a\f\af61dd0bc36448007d8a59c770462e02ee8198a3
-b
-2src/main/java/br/com/store/dto/CredentialsDTO.java,1\e\1e17b94a46de376d2403de9f9b242eb92e8b4e52
-]
--src/main/java/br/com/store/dto/ClientDTO.java,2\6\2618f99c15b814b489c5e1fa634576187e2573c1
 _
 /src/main/java/br/com/store/entites/Request.java,c\9\c9f2d2ce244fe4af6e78c97d5b04bf73b33db2d1

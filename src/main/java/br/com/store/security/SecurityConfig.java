@@ -2,6 +2,7 @@ package br.com.store.security;
 
 import br.com.store.entites.Client;
 import br.com.store.service.ClientService;
+import br.com.store.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDecisionManager;
@@ -21,6 +22,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
+    OperatorService operatorService;
+
+    @Autowired
     ClientService clientService;
 
     @Autowired
@@ -34,6 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Bean
     public OncePerRequestFilter jwtFilter(){
         return new JwtAuthFilter(jwtService, clientService);
+    }
+
+    @Bean
+    public OncePerRequestFilter jwtFilterOperator(){
+        return new JwtAuthFilter(jwtService, operatorService);
     }
 
     @Override
@@ -61,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilterOperator(), UsernamePasswordAuthenticationFilter.class);
     }
 }

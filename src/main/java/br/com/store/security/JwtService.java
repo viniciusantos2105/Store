@@ -39,7 +39,7 @@ public class JwtService {
         Instant instant = dateHourExpiration.atZone(ZoneId.systemDefault()).toInstant();
         Date data = Date.from(instant);
         return Jwts.builder()
-                .setSubject(operator.getName())//Colocar o login do usuario para saber quem ta fazendo a requisição
+                .setSubject(operator.getUsername())//Colocar o login do usuario para saber quem ta fazendo a requisição
                 .setExpiration(data).signWith(SignatureAlgorithm.HS512, signatureKey).compact();
     }
 

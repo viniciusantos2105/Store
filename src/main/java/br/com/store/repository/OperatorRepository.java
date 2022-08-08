@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
-    Optional<Operator> findByName(String name);
+    Optional<Operator> findByUsername(String username);
 
 }

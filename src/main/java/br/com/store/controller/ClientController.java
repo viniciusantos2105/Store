@@ -11,6 +11,7 @@ import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
 import br.com.store.security.JwtService;
 import br.com.store.service.ClientService;
+import br.com.store.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +36,15 @@ public class ClientController {
     ClientService clientService;
 
     @Autowired
+    OperatorService operatorService;
+
+    @Autowired
     JwtService jwtService;
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Client newClient(@RequestBody @Valid Client client){
-        if(clientService.findByUsername(client.getUsername()) == true){
+        if(clientService.findByUsername(client.getUsername()) == true || operatorService.findByUsername(client.getUsername())){
             throw new UsernameAlreadyExistsException();
         }
         if(clientService.findByCpf(client.getCpf()) == true){
