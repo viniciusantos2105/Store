@@ -21,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Controller
 @RestController
 @RequestMapping("/operator")
@@ -79,5 +81,13 @@ public class OperatorController {
         }catch (UsernameNotFoundException | PasswordInvalidException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
+    }
+
+    @GetMapping("/findOperators")
+    public List<Operator> listOperators(@RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return operatorService.findAll(operator);
     }
 }

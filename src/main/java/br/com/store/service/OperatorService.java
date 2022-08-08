@@ -3,6 +3,7 @@ package br.com.store.service;
 import br.com.store.entites.Client;
 import br.com.store.entites.Operator;
 import br.com.store.enums.Responsibility;
+import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
 import br.com.store.repository.OperatorRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OperatorService implements UserDetailsService {
@@ -48,18 +51,21 @@ public class OperatorService implements UserDetailsService {
 
     public Operator changeResponsibility(Operator operator, Operator promotedOperator, String responsibility){
         if(operator.getResponsibility().getResponsibility() != Responsibility.ADMIN.getResponsibility()){
-            throw new UsernameAlreadyExistsException(); //criar erro personalizado
+            throw new DeniedAuthorization();
         }
         else if(responsibility.equalsIgnoreCase(Responsibility.ADMIN.getResponsibility())){
             promotedOperator.setResponsibility(Responsibility.ADMIN);
+            operatorRepository.save(promotedOperator);
             return promotedOperator;
         }
         else if(responsibility.equalsIgnoreCase(Responsibility.SALESMAN.getResponsibility())){
             promotedOperator.setResponsibility(Responsibility.SALESMAN);
+            operatorRepository.save(promotedOperator);
             return promotedOperator;
         }
         else if(responsibility.equalsIgnoreCase(Responsibility.STOCKHOLDER.getResponsibility())){
             promotedOperator.setResponsibility(Responsibility.STOCKHOLDER);
+            operatorRepository.save(promotedOperator);
             return promotedOperator;
         }
         return promotedOperator;
@@ -85,5 +91,14 @@ public class OperatorService implements UserDetailsService {
             return usuario;
         }
         throw new PasswordInvalidException();
+    }
+
+    public List<Operator> findAll(Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN){
+            throw new DeniedAuthorization();
+        }
+        else{
+            return operatorRepository.findAll();
+        }
     }
 }

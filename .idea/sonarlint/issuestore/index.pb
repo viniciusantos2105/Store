@@ -13,8 +13,6 @@ x
 Hsrc/main/java/br/com/store/exceptions/ProductAlreadyExistsException.java,0\8\08e5077ee02ea5aac74bd58a9d5bc736b4e68284
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-s
-Csrc/main/java/br/com/store/exceptions/AddressNotFoundExecption.java,8\7\8747a781c04ac728dab95f7653086a7e60540822
 t
 Dsrc/main/java/br/com/store/exceptions/CpfAlreadyExistsException.java,4\0\406597b3757b86ef6e312c20da273e461f9c8275
 w
@@ -25,12 +23,8 @@ _
 -src/main/java/br/com/store/dto/AdressDTO.java,4\e\4e74872a13023d7301a01942349029cd5251bf08
 _
 /src/main/java/br/com/store/entites/Address.java,d\d\dde48e1ac0829aec9712a1a8db3e50f3cb099080
-h
-8src/main/java/br/com/store/exceptions/StandardError.java,1\6\169f287d720b69a176e09083badb2bbade926db7
 s
 Csrc/main/java/br/com/store/exceptions/ProductNotFoundExecption.java,b\6\b6d7d4b7ef18239f7cb4807c7145ed75f0685408
-s
-Csrc/main/java/br/com/store/exceptions/ResourceExceptionHandler.java,8\1\81f90b2ea9f2d309dd203567310c4e6fd8552582
 s
 Csrc/main/java/br/com/store/exceptions/PasswordInvalidException.java,a\f\af61dd0bc36448007d8a59c770462e02ee8198a3
 _
