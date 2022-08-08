@@ -37,7 +37,7 @@ s
 Csrc/main/java/br/com/store/exceptions/PasswordInvalidException.java,a\f\af61dd0bc36448007d8a59c770462e02ee8198a3
 b
 2src/main/java/br/com/store/dto/CredentialsDTO.java,1\e\1e17b94a46de376d2403de9f9b242eb92e8b4e52
-^
-.src/main/java/br/com/store/entites/Client.java,c\0\c0ff1deaaff240aee7fcae05ee8eb6469239a103
 ]
 -src/main/java/br/com/store/dto/ClientDTO.java,2\6\2618f99c15b814b489c5e1fa634576187e2573c1
+_
+/src/main/java/br/com/store/entites/Request.java,c\9\c9f2d2ce244fe4af6e78c97d5b04bf73b33db2d1

@@ -1,8 +1,11 @@
 package br.com.store.security;
 
+import br.com.store.entites.Client;
 import br.com.store.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,6 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/requests/sale")
                 .authenticated()
                 .antMatchers("/requests/findClientPurchases")
+                .authenticated()
+                .antMatchers("/product/create")
+                .authenticated()
+                .antMatchers("/operator/updateResponsibility")
                 .authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

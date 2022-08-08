@@ -1,6 +1,7 @@
 package br.com.store.security;
 
 import br.com.store.entites.Client;
+import br.com.store.entites.Operator;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -29,6 +30,16 @@ public class JwtService {
         Date data = Date.from(instant);
         return Jwts.builder()
                 .setSubject(client.getUsername())//Colocar o login do usuario para saber quem ta fazendo a requisição
+                .setExpiration(data).signWith(SignatureAlgorithm.HS512, signatureKey).compact();
+    }
+
+    public String generatingTokenOperator(Operator operator){
+        long expString = Long.valueOf(expiration);
+        LocalDateTime dateHourExpiration = LocalDateTime.now().plusMinutes(expString);
+        Instant instant = dateHourExpiration.atZone(ZoneId.systemDefault()).toInstant();
+        Date data = Date.from(instant);
+        return Jwts.builder()
+                .setSubject(operator.getName())//Colocar o login do usuario para saber quem ta fazendo a requisição
                 .setExpiration(data).signWith(SignatureAlgorithm.HS512, signatureKey).compact();
     }
 
