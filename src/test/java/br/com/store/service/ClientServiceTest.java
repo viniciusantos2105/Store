@@ -2,6 +2,8 @@ package br.com.store.service;
 
 import br.com.store.entites.Address;
 import br.com.store.entites.Client;
+import br.com.store.entites.Operator;
+import br.com.store.enums.Responsibility;
 import br.com.store.repository.ClientRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +13,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -40,6 +45,8 @@ class ClientServiceTest {
 
     private static final String NUMBER = "22";
 
+    private static final Responsibility ADMIN = Responsibility.ADMIN;
+
     @InjectMocks
     private ClientService clientService;
 
@@ -48,7 +55,9 @@ class ClientServiceTest {
 
     private Client client;
     private Address address;
+    private Operator operator;
     private Optional<Client> clientOptional;
+
 
     @BeforeEach
     void setUp() {
@@ -57,23 +66,76 @@ class ClientServiceTest {
     }
 
     @Test
-    void save() {
+    void whenSaveThenReturnSucessfullCreate() {
+        when(clientRepository.save(any())).thenReturn(client);
+
+        Client response = clientService.save(client);
+
+        assertNotNull(response);
+        assertEquals(Client.class, response.getClass());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(NAME, response.getName());
+        assertEquals(CPF, response.getCpf());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+
+        assertEquals(ID, response.getAddress().getId());
+        assertEquals(CEP, response.getAddress().getCep());
+        assertEquals(RUA, response.getAddress().getRua());
+        assertEquals(BAIRRO, response.getAddress().getBairro());
+        assertEquals(CIDADE, response.getAddress().getCidade());
+        assertEquals(ESTADO, response.getAddress().getEstado());
+        assertEquals(NUMBER, response.getAddress().getNumber());
     }
 
     @Test
-    void whenFindByUsernameThenReturnAnClientInstance() {
+    void whenFindByUsernameThenReturnAnClientBoolean() {
+        when(clientRepository.findByUsername(anyString())).thenReturn(clientOptional);
+
+        boolean validate = clientService.findByUsername(USERNAME);
+
+        assertTrue(validate);
     }
 
     @Test
-    void findByUsernameGet() {
+    void whenFindByUsernameGetThenReturnAnClientInstance() {
+        when(clientRepository.findByUsername(anyString())).thenReturn(clientOptional);
+
+        Client response = clientService.findByUsernameGet(USERNAME);
+
+        assertNotNull(response);
+        assertEquals(Client.class, response.getClass());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(NAME, response.getName());
+        assertEquals(CPF, response.getCpf());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+
+        assertEquals(ID, response.getAddress().getId());
+        assertEquals(CEP, response.getAddress().getCep());
+        assertEquals(RUA, response.getAddress().getRua());
+        assertEquals(BAIRRO, response.getAddress().getBairro());
+        assertEquals(CIDADE, response.getAddress().getCidade());
+        assertEquals(ESTADO, response.getAddress().getEstado());
+        assertEquals(NUMBER, response.getAddress().getNumber());
     }
 
     @Test
     void findByCpf() {
+        when(clientRepository.findByCpf(anyString())).thenReturn(clientOptional);
+
+        boolean validate = clientService.findByCpf(CPF);
+
+        assertTrue(validate);
     }
 
     @Test
     void findByEmail() {
+        when(clientRepository.findByEmail(anyString())).thenReturn(clientOptional);
+
+        boolean validate = clientService.findByEmail(EMAIL);
+
+        assertTrue(validate);
     }
 
     @Test
@@ -100,11 +162,39 @@ class ClientServiceTest {
     }
 
     @Test
-    void findByClientIdSpecific() {
+    void whenFindByClientIdSpecificThenReturnAnClientInstance() {
+        when(clientRepository.findById(anyLong())).thenReturn(clientOptional);
+
+        Client response = clientService.findByClientIdSpecific(ID, operator);
+
+        assertNotNull(response);
+        assertEquals(Client.class, response.getClass());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(NAME, response.getName());
+        assertEquals(CPF, response.getCpf());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+
+        assertEquals(ID, response.getAddress().getId());
+        assertEquals(CEP, response.getAddress().getCep());
+        assertEquals(RUA, response.getAddress().getRua());
+        assertEquals(BAIRRO, response.getAddress().getBairro());
+        assertEquals(CIDADE, response.getAddress().getCidade());
+        assertEquals(ESTADO, response.getAddress().getEstado());
+        assertEquals(NUMBER, response.getAddress().getNumber());
+
+        assertEquals(ID, operator.getId());
+        assertEquals(USERNAME, operator.getUsername());
+        assertEquals(PASSWORD, operator.getPassword());
+        assertEquals(ADMIN, operator.getResponsibility());
     }
 
     @Test
     void findFilter() {
+        when(clientRepository.findAll((Sort) any())).thenReturn(anyList());
+
+        List<Client> list = clientService.findFilter(client, operator);
+        assertNotNull(list);
     }
 
     @Test
@@ -128,8 +218,9 @@ class ClientServiceTest {
     }
 
     private void startClient(){
-        client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
         address = new Address(ID, CEP, RUA, BAIRRO, CIDADE, ESTADO, NUMBER);
+        client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
+        operator = new Operator(ID, USERNAME, PASSWORD, ADMIN);
         clientOptional = Optional.of(new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address));
     }
 }
