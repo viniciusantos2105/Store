@@ -4,6 +4,7 @@ import br.com.store.entites.Client;
 import br.com.store.entites.Operator;
 import br.com.store.enums.Responsibility;
 import br.com.store.exceptions.AddressNotFoundExecption;
+import br.com.store.exceptions.ClientNotFoundExecption;
 import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.repository.ClientRepository;
@@ -78,8 +79,7 @@ public class ClientService implements UserDetailsService {
     }
 
     public Client findByClientId(Long id){
-        Client client = clientRepository.findById(id).get();
-        return client;
+      return clientRepository.findById(id).orElseThrow(()-> new ClientNotFoundExecption());
     }
 
     public Client findByClientIdSpecific(Long id, Operator operator){
@@ -87,8 +87,7 @@ public class ClientService implements UserDetailsService {
             throw new DeniedAuthorization();
         }
         else {
-            Client client = clientRepository.findById(id).get();
-            return client;
+            return clientRepository.findById(id).orElseThrow(()-> new ClientNotFoundExecption());
         }
     }
 
