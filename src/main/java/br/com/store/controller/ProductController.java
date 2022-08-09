@@ -1,9 +1,12 @@
 package br.com.store.controller;
 
 import br.com.store.dto.ProductDTO;
+import br.com.store.entites.Operator;
 import br.com.store.entites.Product;
 import br.com.store.exceptions.ObjectNotFoundException;
 import br.com.store.exceptions.ProductAlreadyExistsException;
+import br.com.store.security.JwtService;
+import br.com.store.service.OperatorService;
 import br.com.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,12 @@ public class ProductController {
     @Autowired
     public ProductService productService;
 
+    @Autowired
+    JwtService jwtService;
+
+    @Autowired
+    OperatorService operatorService;
+
     @GetMapping("/allProducts")
     public List<Product> findAllProducts(){
        return productService.findAllProducts();
@@ -33,36 +42,41 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product createProduct(@RequestBody @Valid Product product){
-        if(productService.findByName(product.getName()) == true){
+    public Product createProduct(@RequestBody @Valid Product product, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        if(productService.findByName(product.getName())){
             throw new ProductAlreadyExistsException();
         }
         else{
-            //String senhaCriptografada = passwordEncoder.encode(user.getPassword());
-            //client.setPassword(senhaCriptografada);
-            return productService.save(product);
+            return productService.saveProduct(product, operator);
         }
     }
 
     @DeleteMapping("/delete{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public HttpStatus deleteProduct(@PathVariable Long id){
-        productService.delete(id);
-        return HttpStatus.ACCEPTED;
+    public void deleteProduct(@PathVariable Long id, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        productService.delete(id, operator);
     }
 
     @PostMapping("/addStock")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public HttpStatus addStock(@RequestBody ProductDTO productDto){
-        productService.addStock(productDto);
-        return HttpStatus.ACCEPTED;
+    public Product addStock(@RequestBody ProductDTO productDto, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return productService.addStock(productDto, operator);
     }
 
     @PostMapping("/attPrice")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public HttpStatus attPrice(@RequestBody ProductDTO productDTO){
-        productService.attPrice(productDTO);
+    public HttpStatus attPrice(@RequestBody ProductDTO productDTO,  @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        productService.attPrice(productDTO, operator);
         return HttpStatus.ACCEPTED;
     }
 

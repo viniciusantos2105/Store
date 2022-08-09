@@ -1,7 +1,10 @@
 package br.com.store.service;
 
 import br.com.store.entites.Client;
+import br.com.store.entites.Operator;
+import br.com.store.enums.Responsibility;
 import br.com.store.exceptions.AddressNotFoundExecption;
+import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,10 +82,25 @@ public class ClientService implements UserDetailsService {
         return client;
     }
 
-    public List<Client> findFilter(Client filter){
-        ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example example = Example.of(filter, matcher);
-        return clientRepository.findAll(example);
+    public Client findByClientIdSpecific(Long id, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN){
+            throw new DeniedAuthorization();
+        }
+        else {
+            Client client = clientRepository.findById(id).get();
+            return client;
+        }
+    }
+
+    public List<Client> findFilter(Client filter, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN){
+            throw new DeniedAuthorization();
+        }
+        else {
+            ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+            Example example = Example.of(filter, matcher);
+            return clientRepository.findAll(example);
+        }
     }
 
     public String findAddressByCep(String cep) {

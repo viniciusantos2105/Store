@@ -5,6 +5,7 @@ import br.com.store.dto.CredentialsDTO;
 import br.com.store.dto.TokenDTO;
 import br.com.store.entites.Address;
 import br.com.store.entites.Client;
+import br.com.store.entites.Operator;
 import br.com.store.exceptions.CpfAlreadyExistsException;
 import br.com.store.exceptions.EmailAlreadyExistisException;
 import br.com.store.exceptions.PasswordInvalidException;
@@ -60,13 +61,19 @@ public class ClientController {
     }
 
     @GetMapping("/findById{id}")
-    public Client findById(@PathVariable Long id){
-        return clientService.findByClientId(id);
+    public Client findById(@PathVariable Long id, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return clientService.findByClientIdSpecific(id, operator);
     }
 
     @GetMapping("/findFilter")
-    public List<Client> findFilter(@RequestBody Client filter){
-        return clientService.findFilter(filter);
+    public List<Client> findFilter(@RequestBody Client filter, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return clientService.findFilter(filter, operator);
     }
 
     @PostMapping("/findcep")

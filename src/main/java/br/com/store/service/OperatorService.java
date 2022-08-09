@@ -38,7 +38,7 @@ public class OperatorService implements UserDetailsService {
 
     public void deleteOperator(Operator operator, Operator firedOperator){
         if(operator.getResponsibility() != Responsibility.ADMIN){
-            throw new UsernameAlreadyExistsException();
+            throw new DeniedAuthorization();
         }
         else {
             operatorRepository.delete(firedOperator);

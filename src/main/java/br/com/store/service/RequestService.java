@@ -2,10 +2,9 @@ package br.com.store.service;
 
 import br.com.store.dto.ClientDTO;
 import br.com.store.dto.ProductDTO;
-import br.com.store.entites.Address;
-import br.com.store.entites.Client;
-import br.com.store.entites.Product;
-import br.com.store.entites.Request;
+import br.com.store.entites.*;
+import br.com.store.enums.Responsibility;
+import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.exceptions.ProductNotFoundExecption;
 import br.com.store.repository.RequestRepository;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +21,8 @@ import java.util.Optional;
 @Service
 public class RequestService {
 
-
+    @Autowired
+    OperatorService operatorService;
     @Autowired
     RequestRepository requestRepository;
     @Autowired
@@ -38,8 +38,13 @@ public class RequestService {
       return requestRepository.findById(id).get();
     }
 
-    public List<Request> findAllRequests(){
-        return requestRepository.findAll();
+    public List<Request> findAllRequests(Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.SALESMAN){
+            throw new DeniedAuthorization();
+        }
+        else {
+            return requestRepository.findAll();
+        }
     }
 
     public Request saleRequest(Long id1, Long id2, Integer quantity, String address, String number){

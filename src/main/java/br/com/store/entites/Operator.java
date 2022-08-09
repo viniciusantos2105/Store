@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -23,10 +24,10 @@ public class Operator implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Campo username é obrigatorio")
+    @NotNull(message = "Campo username é obrigatorio")
     private String username;
-    @NotBlank(message = "Campo senha é obrigatorio")
+    @NotNull(message = "Campo senha é obrigatorio")
     private String password;
-    @NotBlank(message = "Campo cargo é obrigatorio")
+    @NotNull(message = "Campo cargo é obrigatorio")
     private Responsibility responsibility;
 }

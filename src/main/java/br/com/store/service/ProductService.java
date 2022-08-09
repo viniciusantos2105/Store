@@ -1,7 +1,10 @@
 package br.com.store.service;
 
 import br.com.store.dto.ProductDTO;
+import br.com.store.entites.Operator;
 import br.com.store.entites.Product;
+import br.com.store.enums.Responsibility;
+import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -22,7 +25,17 @@ public class ProductService {
       return productRepository.save(product);
     }
 
-    public void delete(Long id){
+    public Product saveProduct(Product product, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.STOCKHOLDER){
+            throw new DeniedAuthorization();
+        }
+        return productRepository.save(product);
+    }
+
+    public void delete(Long id, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.STOCKHOLDER){
+            throw new DeniedAuthorization();
+        }
         Product product = productRepository.findById(id).get();
         productRepository.delete(product);
     }
@@ -35,24 +48,34 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public void addStock(ProductDTO productDto){
-        Product product = findByProductId(productDto.getId()).get();
-        if(productDto.getQuantity() <= 0){
-            throw new NumberFormatException("Numero inválido, insira quantidade maior que 0");
+    public Product addStock(ProductDTO productDto, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.STOCKHOLDER){
+            throw new DeniedAuthorization();
         }
         else{
-            product.setQuantity(product.getQuantity() + productDto.getQuantity());
-            save(product);
+            Product product = findByProductId(productDto.getId()).get();
+            if(productDto.getQuantity() <= 0){
+                throw new NumberFormatException("Numero inválido, insira quantidade maior que 0");
+            }
+            else{
+                product.setQuantity(product.getQuantity() + productDto.getQuantity());
+                return save(product);
+            }
         }
     }
-    public void attPrice(ProductDTO productDTO){
-        Product product = findByProductId(productDTO.getId()).get();
-        if(productDTO.getPrice() <= 0){
-            throw new NumberFormatException("Preço inválido, insira um preço maior que 0");
+    public void attPrice(ProductDTO productDTO, Operator operator){
+        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.STOCKHOLDER){
+            throw new DeniedAuthorization();
         }
         else{
-            product.setPrice(BigDecimal.valueOf(productDTO.getPrice()));
-            save(product);
+            Product product = findByProductId(productDTO.getId()).get();
+            if(productDTO.getPrice() <= 0){
+                throw new NumberFormatException("Preço inválido, insira um preço maior que 0");
+            }
+            else{
+                product.setPrice(BigDecimal.valueOf(productDTO.getPrice()));
+                save(product);
+            }
         }
     }
     public BigDecimal saleProduct(Long id, Integer quantity){
@@ -66,7 +89,6 @@ public class ProductService {
             product.setQuantity(product.getQuantity() - quantity);
             save(product);
             return price;
-            //return sucessfull com mensagem de compra realizada com sucesso
         }
     }
     //Método para fazer pesquisa por nome de peça

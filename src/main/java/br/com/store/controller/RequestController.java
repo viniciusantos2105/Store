@@ -2,9 +2,11 @@ package br.com.store.controller;
 
 import br.com.store.dto.RequestDTO;
 import br.com.store.entites.Client;
+import br.com.store.entites.Operator;
 import br.com.store.entites.Request;
 import br.com.store.security.JwtService;
 import br.com.store.service.ClientService;
+import br.com.store.service.OperatorService;
 import br.com.store.service.RequestService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,6 +27,9 @@ import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 public class RequestController {
 
     @Autowired
+    OperatorService operatorService;
+
+    @Autowired
     RequestService requestService;
     @Autowired
     JwtService jwtService;
@@ -42,8 +47,11 @@ public class RequestController {
     }
 
     @GetMapping("/findAll")
-    public List<Request> listAllSales(){
-        return requestService.findAllRequests();
+    public List<Request> listAllSales(@RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return requestService.findAllRequests(operator);
     }
 
     @GetMapping("/findClientPurchases")
