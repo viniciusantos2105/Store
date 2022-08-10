@@ -1,6 +1,4 @@
 
-`
-0src/main/java/br/com/store/StoreApplication.java,9\b\9bfbcfb5ffcf695d14f064e37578f7c98928b462
 l
 <src/main/java/br/com/store/repository/RequestRepository.java,3\3\33f239550d671a3aed1eb05f55183d04fb293b73
 ^
@@ -27,3 +25,23 @@ s
 Csrc/main/java/br/com/store/exceptions/PasswordInvalidException.java,a\f\af61dd0bc36448007d8a59c770462e02ee8198a3
 _
 /src/main/java/br/com/store/entites/Request.java,c\9\c9f2d2ce244fe4af6e78c97d5b04bf73b33db2d1
+n
+>src/main/java/br/com/store/exceptions/DeniedAuthorization.java,5\f\5f065d921d8f880eef68eea624710dae98c0ae91
+f
+6src/main/java/br/com/store/security/JwtAuthFilter.java,8\c\8ca3a4f41faa57dbc1838dae4d123537a904b393
+f
+6src/main/java/br/com/store/service/ProductService.java,0\4\04d68c4f0a58f1f5511bc10557842c0b9c7b78c3
+l
+<src/main/java/br/com/store/controller/ProductController.java,f\4\f4f2a854d7fc2f2474ce2369a9ba019585d967a1
+e
+5src/test/java/br/com/store/StoreApplicationTests.java,9\6\96b3b8ab0594a2f3c959f30828425997be5ad4e4
+g
+7src/main/java/br/com/store/security/SecurityConfig.java,0\e\0eb22a8731087bab0e2049adf429b718b2781c7a
+r
+Bsrc/main/java/br/com/store/exceptions/ClientNotFoundExecption.java,4\d\4d8c6498b9654806418d13ac286c9ed1bcc19ed4
+s
+Csrc/main/java/br/com/store/exceptions/ResourceExceptionHandler.java,8\1\81f90b2ea9f2d309dd203567310c4e6fd8552582
+c
+3src/main/java/br/com/store/security/JwtService.java,6\0\60cc1719b1c5669a26169aa2cf659dee2d13aeae
+m
+=src/main/java/br/com/store/controller/OperatorController.java,f\2\f2141aee2119401da6c879f29ebdb2265aa2cd88

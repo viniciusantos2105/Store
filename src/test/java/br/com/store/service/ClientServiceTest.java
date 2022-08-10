@@ -130,7 +130,7 @@ class ClientServiceTest {
     }
 
     @Test
-    void findByEmail() {
+    void whenFindByEmailThenReturnBoolean() {
         when(clientRepository.findByEmail(anyString())).thenReturn(clientOptional);
 
         boolean validate = clientService.findByEmail(EMAIL);
@@ -190,15 +190,16 @@ class ClientServiceTest {
     }
 
     @Test
-    void findFilter() {
-        when(clientRepository.findAll((Sort) any())).thenReturn(anyList());
+    void whenFindFilterThenReturnClientsInstance() {
+        when(clientRepository.findAll()).thenReturn(List.of(client));
 
-        List<Client> list = clientService.findFilter(client, operator);
-        assertNotNull(list);
+        List<Client> response = clientService.findFilter(client, operator);
+
+        assertNotNull(response);
     }
 
     @Test
-    void findAddressByCep() {
+    void whenFindAddressByCepThenReturn () {
     }
 
     @Test

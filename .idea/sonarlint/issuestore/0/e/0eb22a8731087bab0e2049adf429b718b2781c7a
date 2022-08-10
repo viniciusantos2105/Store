@@ -1,0 +1,9 @@
+
+Z
+java:S1874"DRemove this use of "WebSecurityConfigurerAdapter"; it is deprecated.(Ë¶Ï“
+T
+java:S1128"8Remove this unused import 'br.com.store.entites.Client'.(ŸÌÊN8¢Ûý—¨0
+s
+java:S1128"VRemove this unused import 'org.springframework.security.access.AccessDecisionManager'.(ÛòÖØ8¢Ûý—¨0
+x
+java:S1128	"VRemove this unused import 'org.springframework.security.access.vote.AffirmativeBased'.(Üñˆþøÿÿÿÿ8¢Ûý—¨0
