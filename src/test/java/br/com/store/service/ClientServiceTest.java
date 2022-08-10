@@ -52,7 +52,6 @@ class ClientServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
-
     private Client client;
     private Address address;
     private Operator operator;
