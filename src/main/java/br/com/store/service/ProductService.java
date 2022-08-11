@@ -48,18 +48,19 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Product addStock(ProductDTO productDto, Operator operator){
+    public Product addStock(Long id, Integer quantity, Operator operator){
         if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.STOCKHOLDER){
             throw new DeniedAuthorization();
         }
         else{
-            Product product = findByProductId(productDto.getId()).get();
-            if(productDto.getQuantity() <= 0){
+            Optional<Product> product = productRepository.findById(id);
+            if(quantity <= 0){
                 throw new NumberFormatException("Numero inválido, insira quantidade maior que 0");
             }
             else{
-                product.setQuantity(product.getQuantity() + productDto.getQuantity());
-                return save(product);
+                Product product1 = product.get();
+                product1.setQuantity(product1.getQuantity()+ quantity);
+                return productRepository.save(product1);
             }
         }
     }

@@ -120,7 +120,7 @@ class ClientServiceTest {
     }
 
     @Test
-    void findByCpf() {
+    void whenFindByCpfThenReturnBoolean() {
         when(clientRepository.findByCpf(anyString())).thenReturn(clientOptional);
 
         boolean validate = clientService.findByCpf(CPF);

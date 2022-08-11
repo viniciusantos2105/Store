@@ -1,0 +1,19 @@
+
+[
+java:S4684/"@Replace this persistent entity with a simple POJO or DTO object.(òë³Àøÿÿÿÿ
+B
+java:S11250"'Remove the unnecessary boolean literal.(şé®úùÿÿÿÿ
+=
+java:S11253"'Remove the unnecessary boolean literal.(º…”ù
+=
+java:S11256"'Remove the unnecessary boolean literal.(Ü£”
+[
+java:S4684H"@Replace this persistent entity with a simple POJO or DTO object.(¶œÕ»ıÿÿÿÿ
+[
+java:S4684P"@Replace this persistent entity with a simple POJO or DTO object.(Š”ŞÄüÿÿÿÿ
+S
+java:S1854Y"=Remove this useless assignment to local variable "userLogin".(§Éèá
+D
+java:S1481Y".Remove this unused "userLogin" local variable.(§Éèá
+M
+java:S1128"7Remove this unused import 'br.com.store.dto.ClientDTO'.(‘Ãû½

@@ -62,12 +62,12 @@ public class ProductController {
         productService.delete(id, operator);
     }
 
-    @PostMapping("/addStock")
+    @PatchMapping("/addStock")
     public Product addStock(@RequestBody ProductDTO productDto, @RequestHeader("Authorization") String token){
         String divisor = token;
         String username = jwtService.getClientUsername(divisor.substring(7));
         Operator operator = operatorService.findByUsernameGet(username);
-        return productService.addStock(productDto, operator);
+        return productService.addStock(productDto.getId(), productDto.getQuantity(), operator);
     }
 
     @PostMapping("/attPrice")

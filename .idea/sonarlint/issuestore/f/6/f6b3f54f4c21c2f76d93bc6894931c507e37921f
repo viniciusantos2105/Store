@@ -1,0 +1,19 @@
+
+E
+java:S3740d"/Provide the parametrized type for this generic.(–ü®ò
+f
+java:S3655<"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ºšÑå
+\
+java:S11263"AReplace this if-then-else statement by a single return statement.(ÜŸ×Æúÿÿÿÿ
+\
+java:S1126@"AReplace this if-then-else statement by a single return statement.(Ô‰³Êúÿÿÿÿ
+\
+java:S1126I"AReplace this if-then-else statement by a single return statement.(ûÎ©æÿÿÿÿÿ
+d
+java:S1612R"IReplace this lambda with method reference 'ClientNotFoundExecption::new'.(Ô©€œùÿÿÿÿ
+d
+java:S1612Z"IReplace this lambda with method reference 'ClientNotFoundExecption::new'.(Ô©€œùÿÿÿÿ
+P
+java:S1854—"9Remove this useless assignment to local variable "roles".(±×Ðé
+A
+java:S1481—"*Remove this unused "roles" local variable.(±×Ðé
