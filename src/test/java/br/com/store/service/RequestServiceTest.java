@@ -116,7 +116,12 @@ class RequestServiceTest {
 //    }
 
     @Test
-    void findAllPurchases() {
+    void whenFindAllPurchasesThenReturnSuccessful() {
+        when(requestRepository.findAll()).thenReturn(List.of(request));
+
+        List<Request> response = requestService.findAllPurchases(client);
+
+        assertNotNull(response);
     }
 
     private void start(){
