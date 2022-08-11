@@ -17,8 +17,6 @@ s
 Csrc/main/java/br/com/store/exceptions/ProductNotFoundExecption.java,b\6\b6d7d4b7ef18239f7cb4807c7145ed75f0685408
 s
 Csrc/main/java/br/com/store/exceptions/PasswordInvalidException.java,a\f\af61dd0bc36448007d8a59c770462e02ee8198a3
-_
-/src/main/java/br/com/store/entites/Request.java,c\9\c9f2d2ce244fe4af6e78c97d5b04bf73b33db2d1
 n
 >src/main/java/br/com/store/exceptions/DeniedAuthorization.java,5\f\5f065d921d8f880eef68eea624710dae98c0ae91
 e
@@ -33,16 +31,12 @@ c
 3src/main/java/br/com/store/security/JwtService.java,6\0\60cc1719b1c5669a26169aa2cf659dee2d13aeae
 e
 5src/main/java/br/com/store/service/ClientService.java,f\6\f6b3f54f4c21c2f76d93bc6894931c507e37921f
-`
-0src/main/java/br/com/store/entites/Operator.java,b\1\b14bab3261da4505e476e0c45ea6fd2c739d2beb
 k
 ;src/main/java/br/com/store/controller/ClientController.java,b\3\b315d356d082b1fd67faa54c893ed6e68aa60402
 l
 <src/main/java/br/com/store/controller/RequestController.java,7\e\7eeab40aae920bf7cae3b3619c1659530331807d
 s
 Csrc/main/java/br/com/store/exceptions/AddressNotFoundExecption.java,8\7\8747a781c04ac728dab95f7653086a7e60540822
-^
-.src/main/java/br/com/store/entites/Client.java,c\0\c0ff1deaaff240aee7fcae05ee8eb6469239a103
 b
 2src/main/java/br/com/store/dto/CredentialsDTO.java,1\e\1e17b94a46de376d2403de9f9b242eb92e8b4e52
 ]
