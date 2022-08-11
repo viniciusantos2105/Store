@@ -18,9 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class OperatorServiceTest {
@@ -71,19 +70,48 @@ class OperatorServiceTest {
     }
 
     @Test
-    void deleteOperator() {
+    void whenDeleteOperatorThenReturnSuccessful() {
+        when(operatorRepository.findById(anyLong())).thenReturn(operatorOptional);
+        doNothing().when(operatorRepository).delete(any());
+        operatorService.deleteOperator(operatorAdmin, operatorSalesman);
+        verify(operatorRepository, times(1)).delete(any());
     }
 
     @Test
-    void findByUsername() {
+    void whenFindByUsernameThenReturnBoolean() {
+        when(operatorRepository.findByUsername(anyString())).thenReturn(operatorOptional);
+
+        boolean response = operatorService.findByUsername(USERNAME);
+
+        assertNotNull(response);
+        assertTrue(response);
     }
 
     @Test
-    void changeResponsibility() {
+    void whenChangeResponsibilityThenReturnSuccessful() {
+        when(operatorRepository.save(any())).thenReturn(operatorAdmin);
+
+        Operator response = operatorService.changeResponsibility(operatorAdmin, operatorSalesman, Responsibility.ADMIN.getResponsibility());
+
+        assertNotNull(response);
+        assertEquals(Operator.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(PASSWORD, response.getPassword());
+        assertEquals(Responsibility.ADMIN, response.getResponsibility());
     }
 
     @Test
-    void findById() {
+    void whenFindByIdThenReturnAnInstanceOperator() {
+        when(operatorRepository.findById(anyLong())).thenReturn(operatorOptional);
+
+        Operator response = operatorService.findById(ID);
+
+        assertNotNull(response);
+        assertEquals(Operator.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(USERNAME, response.getUsername());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test

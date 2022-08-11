@@ -43,5 +43,3 @@ s
 Csrc/main/java/br/com/store/exceptions/ResourceExceptionHandler.java,8\1\81f90b2ea9f2d309dd203567310c4e6fd8552582
 c
 3src/main/java/br/com/store/security/JwtService.java,6\0\60cc1719b1c5669a26169aa2cf659dee2d13aeae
-m
-=src/main/java/br/com/store/controller/OperatorController.java,f\2\f2141aee2119401da6c879f29ebdb2265aa2cd88
