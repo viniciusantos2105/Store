@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Store" />
         <module name="Store-master" />
+        <module name="Store" />
       </profile>
     </annotationProcessing>
   </component>

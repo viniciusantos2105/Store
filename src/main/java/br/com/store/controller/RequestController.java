@@ -20,7 +20,7 @@ import java.util.List;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/requests")
 @Controller

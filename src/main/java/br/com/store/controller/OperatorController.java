@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @Controller
 @RestController
 @RequestMapping("/operator")
