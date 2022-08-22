@@ -9,6 +9,7 @@ import br.com.store.exceptions.CpfAlreadyExistsException;
 import br.com.store.exceptions.EmailAlreadyExistisException;
 import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
+import br.com.store.repository.OperatorRepository;
 import br.com.store.security.JwtService;
 import br.com.store.service.ClientService;
 import br.com.store.service.OperatorService;
@@ -33,6 +34,9 @@ public class OperatorController {
     OperatorService operatorService;
 
     @Autowired
+    OperatorRepository repository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -54,8 +58,8 @@ public class OperatorController {
     }
 
     @PostMapping("/getOperator")
-    public Operator getOperator(@RequestBody OperatorDTO operatorDTO){
-        return operatorService.findByUsernameGet(operatorDTO.getUsername());
+    public Operator getOperator(@RequestBody String username){
+        return repository.findByUsername(username).get();
     }
 
     @DeleteMapping("/delete")
