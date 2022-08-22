@@ -53,6 +53,11 @@ public class OperatorController {
         }
     }
 
+    @GetMapping("/getOperator")
+    public Operator getOperator(@RequestBody OperatorDTO operatorDTO){
+        return operatorService.findByUsernameGet(operatorDTO.getUsername());
+    }
+
     @DeleteMapping("/delete")
     public void deleteOperator(@RequestBody Long id, @RequestHeader("Authorization") String token){
         String divisor = token;
