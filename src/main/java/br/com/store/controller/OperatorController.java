@@ -53,7 +53,7 @@ public class OperatorController {
         }
     }
 
-    @GetMapping("/getOperator")
+    @PostMapping("/getOperator")
     public Operator getOperator(@RequestBody OperatorDTO operatorDTO){
         return operatorService.findByUsernameGet(operatorDTO.getUsername());
     }
