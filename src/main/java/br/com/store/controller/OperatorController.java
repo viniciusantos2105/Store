@@ -63,7 +63,7 @@ public class OperatorController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteOperator(@RequestBody Long id, @RequestHeader("Authorization") String token){
+    public void deleteOperator(@PathVariable Long id, @RequestHeader("Authorization") String token){
         String divisor = token;
         String username = jwtService.getClientUsername(divisor.substring(7));
         Operator firedOperator = operatorService.findById(id);
