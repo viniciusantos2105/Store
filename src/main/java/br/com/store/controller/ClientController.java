@@ -10,6 +10,7 @@ import br.com.store.exceptions.CpfAlreadyExistsException;
 import br.com.store.exceptions.EmailAlreadyExistisException;
 import br.com.store.exceptions.PasswordInvalidException;
 import br.com.store.exceptions.UsernameAlreadyExistsException;
+import br.com.store.repository.ClientRepository;
 import br.com.store.security.JwtService;
 import br.com.store.service.ClientService;
 import br.com.store.service.OperatorService;
@@ -36,6 +37,9 @@ public class ClientController {
     PasswordEncoder passwordEncoder;
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    ClientRepository clientRepository;
 
     @Autowired
     OperatorService operatorService;
@@ -67,6 +71,14 @@ public class ClientController {
         String username = jwtService.getClientUsername(divisor.substring(7));
         Operator operator = operatorService.findByUsernameGet(username);
         return clientService.findByClientIdSpecific(id, operator);
+    }
+
+    @GetMapping("/getClient")
+    public Client getClient(@RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Client client = clientService.findByUsernameGet(username);
+        return client;
     }
 
     @GetMapping("/findFilter")
