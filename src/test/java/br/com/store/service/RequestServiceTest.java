@@ -126,7 +126,7 @@ class RequestServiceTest {
 
     private void start(){
         address = new Address(ID, CEP, RUA, BAIRRO, CIDADE, ESTADO, NUMBER);
-        client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
+//        client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
         product = new Product(ID, "Camisa", 20, PRICE);
         request = new Request(ID, 20, PRICE, client, product, address);
         requestOptional = Optional.of(new Request(ID, 20, PRICE, client, product, address));
