@@ -219,8 +219,8 @@ class ClientServiceTest {
 
     private void startClient(){
         address = new Address(ID, CEP, RUA, BAIRRO, CIDADE, ESTADO, NUMBER);
-        client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
+        //client = new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address);
         operator = new Operator(ID, USERNAME, PASSWORD, ADMIN);
-        clientOptional = Optional.of(new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address));
+        //clientOptional = Optional.of(new Client(ID, USERNAME, NAME, CPF, EMAIL, PASSWORD, address));
     }
 }
