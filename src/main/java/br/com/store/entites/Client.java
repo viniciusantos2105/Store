@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Client implements Serializable {
 
     @Id
