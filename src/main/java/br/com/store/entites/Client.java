@@ -14,7 +14,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -44,4 +43,14 @@ public class Client implements Serializable {
     @JsonManagedReference
     private List<Request> purchaseRecord = new ArrayList<>();
 
+    public Client(Long id, String username, String name, String cpf, String email, String password, Address address, List<Request> purchaseRecord) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.purchaseRecord = purchaseRecord;
+    }
 }
