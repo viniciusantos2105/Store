@@ -14,6 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -38,7 +39,8 @@ public class Client implements Serializable {
     @JoinColumn(name = "tb_address")
     private Address address;
 
-    @OneToMany(cascade=CascadeType.PERSIST, mappedBy = "client")
+    @OneToMany(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "tb_purchaseRecord")
     @JsonManagedReference
     private List<Request> purchaseRecord = new ArrayList<>();
 
