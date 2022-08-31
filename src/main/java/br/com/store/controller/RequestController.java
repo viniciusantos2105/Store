@@ -59,7 +59,8 @@ public class RequestController {
         String divisor = token;
         String username = jwtService.getClientUsername(divisor.substring(7));
         Client client = clientService.findByUsernameGet(username);
-        return requestService.findAllPurchases(client);
+        requestService.findAllPurchases(client);
+        return client.getPurchaseRecord();
     }
 
 }

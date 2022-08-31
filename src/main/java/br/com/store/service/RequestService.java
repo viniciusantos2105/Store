@@ -77,8 +77,19 @@ public class RequestService {
     }
 
     public List<Request> findAllPurchases(Client client){
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example example = Example.of(client, matcher);
-        return requestRepository.findAll(example);
+            List<Request> list = requestRepository.findAll();
+            client.getPurchaseRecord();
+            while (list.size() > 0) {
+                Long id = Long.valueOf(list.size());
+                Request request = findByRequestId(id);
+                if (request.getClient().getId().equals(client.getId())) {
+                    client.getPurchaseRecord().add(request);
+                    list.remove(request);
+                }else{
+                    list.remove(request);
+                }
+            }
+        clientService.save(client);
+        return client.getPurchaseRecord();
     }
 }

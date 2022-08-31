@@ -1,18 +1,19 @@
 package br.com.store.entites;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
@@ -37,5 +38,9 @@ public class Client implements Serializable {
     @JoinColumn(name = "tb_address")
     private Address address;
 
+    @OneToMany(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "tb_purchaseRecord")
+    @JsonManagedReference
+    private List<Request> purchaseRecord = new ArrayList<>();
 
 }
