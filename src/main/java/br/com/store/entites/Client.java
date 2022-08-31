@@ -38,8 +38,7 @@ public class Client implements Serializable {
     @JoinColumn(name = "tb_address")
     private Address address;
 
-    @OneToMany(cascade=CascadeType.PERSIST)
-    @JoinColumn(name = "tb_purchaseRecord")
+    @OneToMany(cascade=CascadeType.PERSIST, mappedBy = "client")
     @JsonManagedReference
     private List<Request> purchaseRecord = new ArrayList<>();
 
