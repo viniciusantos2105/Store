@@ -1,10 +1,7 @@
 package br.com.store.entites;
 
 import br.com.store.enums.Responsibility;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +13,8 @@ import java.io.Serializable;
 
 @Entity
 @Builder
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Operator implements Serializable {
