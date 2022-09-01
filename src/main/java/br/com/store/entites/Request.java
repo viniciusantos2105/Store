@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -23,6 +25,7 @@ public class Request implements Serializable {
     @NotNull(message = "Insira quantidade válida")
     private Integer quantidade;
     private BigDecimal price;
+    private String time;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "client_id")
@@ -36,5 +39,6 @@ public class Request implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private Address address;
+
 
 }

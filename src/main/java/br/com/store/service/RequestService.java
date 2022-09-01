@@ -15,6 +15,9 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,8 +64,13 @@ public class RequestService {
             Optional<Product> product = productService.findByProductId(id2);
             product.orElseThrow(()-> new ProductNotFoundExecption());
             BigDecimal price = productService.saleProduct(product.get().getId(), quantity);
-            Request request = new Request(null, quantity, price, client, product.get(), addressFinal);
+            LocalDateTime timeLocal = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            String time = timeLocal.format(formatter);
+            Request request = new Request(null, quantity, price, time, client, product.get(), addressFinal);
+            client.getPurchaseRecord().add(request);
             saveRequest(request);
+            clientService.save(client);
             return request;
         }
         else{
@@ -70,26 +78,18 @@ public class RequestService {
             Optional<Product> product = productService.findByProductId(id2);
             product.orElseThrow(()-> new ProductNotFoundExecption());
             BigDecimal price = productService.saleProduct(product.get().getId(), quantity);
-            Request request = new Request(null, quantity, price, client, product.get(), client.getAddress());
+            LocalDateTime timeLocal = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            String time = timeLocal.format(formatter);
+            Request request = new Request(null, quantity, price, time,  client, product.get(), client.getAddress());
             saveRequest(request);
+            client.getPurchaseRecord().add(request);
+            clientService.save(client);
             return request;
         }
     }
 
     public List<Request> findAllPurchases(Client client){
-            List<Request> list = requestRepository.findAll();
-            client.getPurchaseRecord();
-            while (list.size() > 0) {
-                Long id = Long.valueOf(list.size());
-                Request request = findByRequestId(id);
-                if (request.getClient().getId().equals(client.getId())) {
-                    client.getPurchaseRecord().add(request);
-                    list.remove(request);
-                }else{
-                    list.remove(request);
-                }
-            }
-        clientService.save(client);
         return client.getPurchaseRecord();
     }
 }
