@@ -6,6 +6,7 @@ import br.com.store.entites.*;
 import br.com.store.enums.Responsibility;
 import br.com.store.exceptions.DeniedAuthorization;
 import br.com.store.exceptions.ProductNotFoundExecption;
+import br.com.store.exceptions.RequestNotFoundExecption;
 import br.com.store.repository.RequestRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,15 @@ public class RequestService {
 
     public List<Request> findAllPurchases(Client client){
         return client.getPurchaseRecord();
+    }
+
+    public Request findBySpecificRequest(Long id, Client client){
+        Request request = requestRepository.findById(id).orElseThrow(()-> new RequestNotFoundExecption());
+        if(request.getClient().equals(client)){
+            return request;
+        }
+        else{
+            throw new DeniedAuthorization();
+        }
     }
 }
