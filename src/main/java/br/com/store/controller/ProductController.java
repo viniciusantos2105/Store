@@ -81,7 +81,7 @@ public class ProductController {
         return HttpStatus.ACCEPTED;
     }
 
-    @GetMapping("/findFilter")
+    @PostMapping("/findFilter")
     @ResponseStatus(HttpStatus.OK)
     public List<Product> findFilter(@RequestBody Product filter){
       return productService.findFilter(filter);
