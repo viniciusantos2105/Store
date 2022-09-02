@@ -1,5 +1,7 @@
 package br.com.store.service;
 
+import br.com.store.dto.ClientDTO;
+import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.entites.Operator;
 import br.com.store.enums.Responsibility;
@@ -161,4 +163,21 @@ public class ClientService implements UserDetailsService {
         }
         throw new PasswordInvalidException();
     }
+
+    public Client updateAddresClient(Client newAddressClient, Client oldAddress){
+        List<String> listAddress = splitAddress(address(findAddressByCep(newAddressClient.getAddress().getCep())));
+        newAddressClient.getAddress().setCep(listAddress.get(0).substring(1));
+        newAddressClient.getAddress().setRua(listAddress.get(1).substring(2));
+        newAddressClient.getAddress().setBairro(listAddress.get(2).substring(2));
+        newAddressClient.getAddress().setCidade(listAddress.get(3).substring(2));
+        newAddressClient.getAddress().setEstado(listAddress.get(4).substring(2));
+        oldAddress.setAddress(newAddressClient.getAddress());
+        return clientRepository.save(oldAddress);
+    }
+
+    public Client updateEmailClient(Client newEmail, Client oldEmail){
+        oldEmail.setEmail(newEmail.getEmail());
+        return clientRepository.save(oldEmail);
+    }
+
 }

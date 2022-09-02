@@ -106,4 +106,21 @@ public class ClientController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
    }
+
+   @PatchMapping("/updateAddress")
+    public Client updateAddress(@RequestHeader("Authorization") String token, @RequestBody Client newAddressClient){
+       String divisor = token;
+       String username = jwtService.getClientUsername(divisor.substring(7));
+       Client oldAddressClient = clientService.findByUsernameGet(username);
+       return clientService.updateAddresClient(newAddressClient, oldAddressClient);
+   }
+
+    @PatchMapping("/updateEmail")
+    public Client updateEmail(@RequestHeader("Authorization") String token, @RequestBody Client newEmail){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Client oldEmail = clientService.findByUsernameGet(username);
+        return clientService.updateEmailClient(newEmail, oldEmail);
+    }
+
 }

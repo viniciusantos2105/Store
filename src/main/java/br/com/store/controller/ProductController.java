@@ -72,7 +72,6 @@ public class ProductController {
     }
 
     @PostMapping("/attPrice")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public HttpStatus attPrice(@RequestBody ProductDTO productDTO,  @RequestHeader("Authorization") String token){
         String divisor = token;
         String username = jwtService.getClientUsername(divisor.substring(7));
@@ -82,7 +81,6 @@ public class ProductController {
     }
 
     @PostMapping("/findFilter")
-    @ResponseStatus(HttpStatus.OK)
     public List<Product> findFilter(@RequestBody Product filter){
       return productService.findFilter(filter);
     }
