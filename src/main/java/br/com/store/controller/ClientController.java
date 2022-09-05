@@ -26,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @Controller
@@ -39,7 +40,7 @@ public class ClientController {
     ClientService clientService;
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientRepository repository;
 
     @Autowired
     OperatorService operatorService;
@@ -87,6 +88,11 @@ public class ClientController {
         String username = jwtService.getClientUsername(divisor.substring(7));
         Client client = clientService.findByUsernameGet(username);
         return client;
+    }
+
+    @PostMapping("/getClientPost")
+    public Client getClientPost(@RequestBody String username){
+        return repository.findByUsername(username).get();
     }
 
     @GetMapping("/findFilter")
