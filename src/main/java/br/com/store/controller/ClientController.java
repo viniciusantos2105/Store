@@ -73,6 +73,14 @@ public class ClientController {
         return clientService.findByClientIdSpecific(id, operator);
     }
 
+    @GetMapping("/findByIdClient{id}")
+    public Client findByIdClient(@PathVariable Long id, @RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Client client = clientService.findByUsernameGet(username);
+        return clientService.findByClientIdClient(id, client);
+    }
+
     @GetMapping("/getClient")
     public Client getClient(@RequestHeader("Authorization") String token){
         String divisor = token;

@@ -93,6 +93,16 @@ public class ClientService implements UserDetailsService {
         }
     }
 
+    public Client findByClientIdClient(Long id, Client client){
+        Client clientFinal = clientRepository.findById(id).get();
+        if(clientFinal.equals(client)){
+            return client;
+        }
+        else {
+            throw new DeniedAuthorization();
+        }
+    }
+
     public List<Client> findFilter(Client filter, Operator operator){
         if(operator.getResponsibility() != Responsibility.ADMIN){
             throw new DeniedAuthorization();
