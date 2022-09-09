@@ -62,11 +62,11 @@ public class OperatorController {
         return repository.findByUsername(username).get();
     }
 
-    @DeleteMapping("/delete")
-    public void deleteOperator(@RequestBody OperatorDTO operatorDTO, @RequestHeader("Authorization") String token){
+    @DeleteMapping("/delete{id}")
+    public void deleteOperator(@PathVariable Long id, @RequestHeader("Authorization") String token){
         String divisor = token;
         String username = jwtService.getClientUsername(divisor.substring(7));
-        Operator firedOperator = operatorService.findById(operatorDTO.getId());
+        Operator firedOperator = operatorService.findById(id);
         Operator operator = operatorService.findByUsernameGet(username);
         operatorService.deleteOperator(operator, firedOperator);
     }
