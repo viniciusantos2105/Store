@@ -74,5 +74,12 @@ public class RequestController {
         requestService.findAllPurchases(client);
         return client.getPurchaseRecord();
     }
+    @GetMapping("/findByRequestId{id}")
+    public Request listAllSpecificRequest(@RequestHeader("Authorization") String token, @PathVariable Long id){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return requestService.findSpeficicRequest(id, operator);
+    }
 
 }

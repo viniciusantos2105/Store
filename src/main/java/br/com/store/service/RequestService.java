@@ -103,4 +103,13 @@ public class RequestService {
             throw new DeniedAuthorization();
         }
     }
+
+    public Request findSpeficicRequest(Long id, Operator operator){
+        if(operator.getResponsibility().equals(Responsibility.ADMIN)){
+            return requestRepository.findById(id).get();
+        }
+        else{
+            throw new DeniedAuthorization();
+        }
+    }
 }
