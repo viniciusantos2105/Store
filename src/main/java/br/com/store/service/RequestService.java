@@ -43,7 +43,7 @@ public class RequestService {
     }
 
     public List<Request> findAllRequests(Operator operator){
-        if(operator.getResponsibility() != Responsibility.ADMIN && operator.getResponsibility() != Responsibility.SALESMAN){
+        if(operator.getResponsibility() == Responsibility.STOCKHOLDER){
             throw new DeniedAuthorization();
         }
         else {
@@ -105,11 +105,11 @@ public class RequestService {
     }
 
     public Request findSpeficicRequest(Long id, Operator operator){
-        if(operator.getResponsibility().equals(Responsibility.ADMIN)){
-            return requestRepository.findById(id).get();
-        }
-        else{
+        if(operator.getResponsibility() == Responsibility.STOCKHOLDER){
             throw new DeniedAuthorization();
+        }
+        else {
+            return requestRepository.findById(id).get();
         }
     }
 }
