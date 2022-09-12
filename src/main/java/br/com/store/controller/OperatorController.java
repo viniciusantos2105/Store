@@ -57,8 +57,16 @@ public class OperatorController {
         }
     }
 
-    @PostMapping("/getOperator")
-    public Operator getOperator(@RequestBody String username){
+    @GetMapping("/getOperator")
+    public Operator getOperator(@RequestHeader("Authorization") String token){
+        String divisor = token;
+        String username = jwtService.getClientUsername(divisor.substring(7));
+        Operator operator = operatorService.findByUsernameGet(username);
+        return operator;
+    }
+
+    @PostMapping("/getOperatorPost")
+    public Operator getOperatorPost(@RequestBody String username){
         return repository.findByUsername(username).get();
     }
 
