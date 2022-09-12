@@ -5,10 +5,7 @@ import br.com.store.entites.Address;
 import br.com.store.entites.Client;
 import br.com.store.entites.Operator;
 import br.com.store.enums.Responsibility;
-import br.com.store.exceptions.AddressNotFoundExecption;
-import br.com.store.exceptions.ClientNotFoundExecption;
-import br.com.store.exceptions.DeniedAuthorization;
-import br.com.store.exceptions.PasswordInvalidException;
+import br.com.store.exceptions.*;
 import br.com.store.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -38,15 +35,31 @@ public class ClientService implements UserDetailsService {
     PasswordEncoder encoder;
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    OperatorService operatorService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public Client save(Client client){
-        List<String> listAddress = splitAddress(address(findAddressByCep(client.getAddress().getCep())));
-        client.getAddress().setCep(listAddress.get(0).substring(1));
-        client.getAddress().setRua(listAddress.get(1).substring(2));
-        client.getAddress().setBairro(listAddress.get(2).substring(2));
-        client.getAddress().setCidade(listAddress.get(3).substring(2));
-        client.getAddress().setEstado(listAddress.get(4).substring(2));
-        return clientRepository.save(client);
+        if(findByUsername(client.getUsername()) || operatorService.findByUsername(client.getUsername())){
+            throw new UsernameAlreadyExistsException();
+        }
+        if(findByCpf(client.getCpf())){
+            throw new CpfAlreadyExistsException();
+        }
+        if(findByEmail(client.getEmail())){
+            throw new EmailAlreadyExistisException();
+        }
+        else {
+            client.setPassword(passwordEncoder.encode(client.getPassword()));
+            List<String> listAddress = splitAddress(address(findAddressByCep(client.getAddress().getCep())));
+            client.getAddress().setCep(listAddress.get(0).substring(1));
+            client.getAddress().setRua(listAddress.get(1).substring(2));
+            client.getAddress().setBairro(listAddress.get(2).substring(2));
+            client.getAddress().setCidade(listAddress.get(3).substring(2));
+            client.getAddress().setEstado(listAddress.get(4).substring(2));
+            return clientRepository.save(client);
+        }
     }
 
     public boolean findByUsername(String username){
@@ -196,8 +209,13 @@ public class ClientService implements UserDetailsService {
     }
 
     public Client updateEmailClient(Client newEmail, Client oldEmail){
-        oldEmail.setEmail(newEmail.getEmail());
-        return clientRepository.save(oldEmail);
+        if(findByEmail(newEmail.getEmail())){
+            throw new EmailAlreadyExistisException();
+        }
+        else{
+            oldEmail.setEmail(newEmail.getEmail());
+            return clientRepository.save(oldEmail);
+        }
     }
 
 }

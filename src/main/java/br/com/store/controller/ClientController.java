@@ -51,19 +51,7 @@ public class ClientController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Client newClient(@RequestBody @Valid Client client){
-        if(clientService.findByUsername(client.getUsername()) == true || operatorService.findByUsername(client.getUsername())){
-            throw new UsernameAlreadyExistsException();
-        }
-        if(clientService.findByCpf(client.getCpf()) == true){
-            throw new CpfAlreadyExistsException();
-        }
-        if(clientService.findByEmail(client.getEmail()) == true){
-            throw new EmailAlreadyExistisException();
-        }
-        else{
-            client.setPassword(passwordEncoder.encode(client.getPassword()));
-            return clientService.save(client);
-        }
+       return clientService.save(client);
     }
 
     @GetMapping("/findById{id}")
