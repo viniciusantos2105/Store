@@ -71,7 +71,7 @@ public class RequestService {
             Request request = new Request(null, quantity, price, time, client, product.get(), addressFinal);
             client.getPurchaseRecord().add(request);
             saveRequest(request);
-            clientService.save(client);
+            clientService.saveClientPurchase(client);
             return request;
         }
         else{
@@ -85,7 +85,7 @@ public class RequestService {
             Request request = new Request(null, quantity, price, time,  client, product.get(), client.getAddress());
             saveRequest(request);
             client.getPurchaseRecord().add(request);
-            clientService.save(client);
+            clientService.saveClientPurchase(client);
             return request;
         }
     }

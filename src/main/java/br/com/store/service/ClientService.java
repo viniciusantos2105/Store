@@ -62,6 +62,10 @@ public class ClientService implements UserDetailsService {
         }
     }
 
+    public Client saveClientPurchase(Client client){
+        return clientRepository.save(client);
+    }
+
     public boolean findByUsername(String username){
         if(clientRepository.findByUsername(username).isPresent()){
             return true;
